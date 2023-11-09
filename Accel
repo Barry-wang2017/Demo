@@ -1,1 +1,14 @@
-accelerlation processing code
+>> clear all
+file_read = dir('/Users/barrywang/Documents/MATLAB/J7xx/TP4 data from Dan/back face/*.csv');
+filename = {file_read.name};
+file_length = length(file_read);
+for i = 1:file_length
+       id = file_read(i).name;
+       path = strcat('/Users/barrywang/Documents/MATLAB/J7xx/TP4 data from Dan/back face','/',id);
+       data = csvread(path,9,0);
+       T = array2table(data,...
+      'VariableNames',{'Time','CH1','CH2','CH3'});
+       T.Time = seconds(T.Time);
+       TT = table2timetable(T,'RowTimes','Time');
+       save([id,'.mat'],'TT');
+   end
